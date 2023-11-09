@@ -9,12 +9,7 @@ public class GenerateMesh : MonoBehaviour
 
     private Mesh mesh;
 
-    private void Start()
-    {
-        Generate();
-    }
-
-    public void Generate()
+    public void Generate(float h)
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
@@ -33,7 +28,7 @@ public class GenerateMesh : MonoBehaviour
             {
                 float xPos = x / (float)(vertexCountX - 1);
                 float zPos = z / (float)(vertexCountZ - 1);
-                float y = 0;
+                float y = h;
                 int index = z * vertexCountX + x;
                 vertices[index] = new Vector3(xPos, y, zPos);
 

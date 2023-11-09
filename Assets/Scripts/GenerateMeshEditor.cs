@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(GenerateMesh))]
+[CustomEditor(typeof(ShellCreator))]
 public class GenerateMeshEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        GenerateMesh genMesh = (GenerateMesh)target;
+        ShellCreator shellCreator = (ShellCreator)target;
         if (DrawDefaultInspector())
         {
-            //if(genMesh.autoUpdate) genMesh.Generate();
         }
-        if (GUILayout.Button("Generate"))
+        if (GUILayout.Button("Generate Shells"))
         {
-            genMesh.Generate();
+            shellCreator.CreateShells();
+        }
+        if (GUILayout.Button("Delete Shells"))
+        {
+            shellCreator.DeleteShells();
         }
     }
 }
