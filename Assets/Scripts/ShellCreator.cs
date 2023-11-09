@@ -13,20 +13,21 @@ public class ShellCreator : MonoBehaviour
     public void CreateShells()
     {
         DeleteShells();
-        Material mat = new Material(shellShader);
+        
         shells = new GameObject[shellCount];
         for (int i = 0; i < shellCount; ++i)
         {
+            Material mat = new Material(shellShader);
             shells[i] = new GameObject("Shell " + i.ToString());
             shells[i].AddComponent(typeof(MeshRenderer));
             shells[i].AddComponent(typeof(MeshFilter));
             shells[i].AddComponent(typeof(GenerateMesh));
-            shells[i].GetComponent<MeshRenderer>().material = mat;
+            shells[i].GetComponent<MeshRenderer>().sharedMaterial = mat;
             shells[i].GetComponent<GenerateMesh>().Generate(((float)i/shellCount)*0.1f);
-            shells[i].GetComponent<MeshRenderer>().material.SetInt("_ShellCount", shellCount);
-            shells[i].GetComponent<MeshRenderer>().material.SetInt("_ShellIndex", i);
-            shells[i].GetComponent<MeshRenderer>().material.SetInt("_Density", 100);
-            shells[i].GetComponent<MeshRenderer>().material.SetColor("_BaseColor", shellColor);
+            shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetInt("_ShellCount", shellCount);
+            shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetInt("_ShellIndex", i);
+            shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetInt("_Density", 100);
+            shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetColor("_BaseColor", shellColor);
             shells[i].transform.SetParent(this.transform);
         }
     }

@@ -71,14 +71,11 @@ Shader "Perso/ShellTexturing"
                 float shellIndex = _ShellIndex;
                 float shellCount = _ShellCount;
                 float h = shellIndex / shellCount;
-                if(rng > h)
+                if(rng <= h)
                 {
-                    return _BaseColor;
+                    discard;
                 }
-                else
-                {
-                    return _NoGrass;
-                }
+                return _BaseColor*h;
             }
             ENDHLSL
         }
