@@ -12,6 +12,7 @@ Shader "Perso/ShellTexturing"
         _Density ("Density", Int) = 100
         _ShellCount ("Shell Count", Int) = 8
         _ShellIndex ("Shell Index", Int) = 0
+        _Thickness ("Thickness", Float) = 1
     }
 
     SubShader
@@ -49,6 +50,7 @@ Shader "Perso/ShellTexturing"
                 int _Density;
                 int _ShellCount;
                 int _ShellIndex;
+                float _Thickness;
             CBUFFER_END
 
             v2f vert (
@@ -67,11 +69,14 @@ Shader "Perso/ShellTexturing"
                 float2 newUV = i.uv * _Density;
                 uint2 tid = newUV;
 				uint seed = tid.x + 100 * tid.y + 100 * 10;
+                float2 localUV = frac(newUV) * 2 - 1;
+				float distFromCenter = length(localUV);
+
                 float rng = hash(seed);
                 float shellIndex = _ShellIndex;
                 float shellCount = _ShellCount;
                 float h = shellIndex / shellCount;
-                if(rng <= h)
+                if(rng <= h || distFromCenter > _Thickness * (rng -h))
                 {
                     discard;
                 }

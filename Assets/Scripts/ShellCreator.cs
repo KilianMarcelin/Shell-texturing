@@ -10,6 +10,9 @@ public class ShellCreator : MonoBehaviour
     public Color shellColor = Color.green;
     public int shellCount;
     public Shader shellShader;
+    public int density = 100;
+    public float shellDistance = 0.1f;
+    public float thickness = 1f;
     public void CreateShells()
     {
         DeleteShells();
@@ -23,11 +26,13 @@ public class ShellCreator : MonoBehaviour
             shells[i].AddComponent(typeof(MeshFilter));
             shells[i].AddComponent(typeof(GenerateMesh));
             shells[i].GetComponent<MeshRenderer>().sharedMaterial = mat;
-            shells[i].GetComponent<GenerateMesh>().Generate(((float)i/shellCount)*0.1f);
+            shells[i].GetComponent<GenerateMesh>().Generate(((float)i/shellCount)*shellDistance);
             shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetInt("_ShellCount", shellCount);
             shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetInt("_ShellIndex", i);
-            shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetInt("_Density", 100);
+            shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetInt("_Density", density);
             shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetColor("_BaseColor", shellColor);
+            shells[i].GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Thickness", thickness);
+
             shells[i].transform.SetParent(this.transform);
         }
     }
